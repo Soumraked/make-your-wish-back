@@ -10,18 +10,17 @@ const firebaseConfig = {
   appId: "1:273373943578:web:9e3eedc3457651b56f7ea3",
   measurementId: "G-SS6QNPCNWV",
 };
-var serviceAccount = require("../key.json");
-
 
 //Local
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://u-app-3100e.firebaseio.com"
-});
+// var serviceAccount = require("../key.json");
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: "https://u-app-3100e.firebaseio.com"
+// });
 //Local
 
 //Online
-// admin.initializeApp(functions.config().firebase);
+admin.initializeApp(functions.config().firebase);
 //Online
 
 firebase.initializeApp(firebaseConfig);
