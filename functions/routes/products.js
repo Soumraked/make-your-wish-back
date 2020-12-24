@@ -110,6 +110,22 @@ app.get("/get", (req, res) => {
     });
 });
 
+app.get("/search", (req, res) => {
+  db.collection('products')
+    .get()
+    .then((snapshot) => {
+      let data = [];
+      snapshot.forEach((doc) => {
+        data.push( doc.data());
+      });
+      return res.status(200).json( data );
+      
+    })
+    .catch(() => {
+      return res.status(500).json({ message: "A ocurrido un problema durante el ingreso del producto." });
+    });
+});
+
 app.put("/update", Auth, (req, res) => {
   const product = {
     id: req.body.id.toString().toUpperCase(),
