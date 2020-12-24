@@ -44,17 +44,68 @@ app.post("/add", Auth, (req, res) => {
     });
 });
 
-app.get("/get/:id", (req, res) => {
+app.get("/getDetails/:id", (req, res) => {
   const id = req.params.id.toString().toUpperCase();
   db.doc(`/products/${id}`)
     .get()
     .then((doc) => {
       if (doc.exists) {
-        return res.status(200).json({ name: doc.data().name, model: doc.data().model, desc: doc.data().desc, value: doc.data().value, img : doc.data().img });
+        return doc;
       }else{
         return res.status(404).json({ message: "El producto no se encontró en la base de datos." });
       }
-    }).catch(() => {
+    })
+    .then((doc) => {
+      db.doc(`/statistics/products`)
+      .get()
+      .then((aux) => {
+        if (aux.exists) {
+          if(Object.keys(aux.data()).includes(id)){
+            db.collection("statistics").doc("products").update({[id]: aux.data()[id] + 1});
+          }else{
+            db.collection("statistics").doc("products").update({[id]: 1});
+          }
+        } else {
+          db.collection("statistics").doc("products").set({[id]:1});
+        }
+      });
+      return doc;
+    })
+    .then((doc) => {
+      return res.status(200).json({ name: doc.data().name, model: doc.data().model, desc: doc.data().desc, value: doc.data().value, img : doc.data().img });
+    })
+    .catch(() => {
+      return res.status(500).json({ message: "A ocurrido un problema durante el ingreso del producto." });
+    });
+});
+
+app.get("/get", (req, res) => {
+  db.collection('products')
+    .get()
+    .then((snapshot) => {
+      let data = [];
+      snapshot.forEach((doc) => {
+        data.push( doc.data());
+      });
+      return data;
+      
+    })
+    .then((data) => {
+      db.doc(`/statistics/access`)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          db.collection("statistics").doc("access").update({access: doc.data().access + 1});
+        } else {
+          db.collection("statistics").doc("access").set({access: 1});
+        }
+      });
+      return data;
+    })
+    .then((data) => {
+      return res.status(200).json( data );
+    })
+    .catch(() => {
       return res.status(500).json({ message: "A ocurrido un problema durante el ingreso del producto." });
     });
 });
