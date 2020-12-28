@@ -14,7 +14,6 @@ app.post("/upload/:folder/:name", (req, res) => {
 
   let imageFileName;
   let imageToBeUploaded = {};
-
   busboy.on("file", (fieldname, file, filename, encoding, mimetype) => {
     if (mimetype !== "image/jpeg" && mimetype !== "image/png") {
       return res.status(400).json({ error: "Wrong file type submitted" });
