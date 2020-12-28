@@ -27,7 +27,7 @@ app.post("/add", Auth, (req, res) => {
 
   if (Object.keys(errors).length > 0) return res.status(400).json(errors);
 
-  product.id = (product.name.trim().substr(0,1) + product.model.split(' ').join('')).toUpperCase();
+  product.id = (product.name.trim().substr(0,1) + product.model.split(' ').join('')).toUpperCase().replace(/[^a-z0-9]/gi, '');
 
   db.doc(`/products/${product.id}`)
     .get()
