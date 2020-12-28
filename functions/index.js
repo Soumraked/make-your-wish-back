@@ -17,6 +17,7 @@ app.use("/products", require("./routes/products"));
 app.use("/admin", require("./routes/accounts"));
 app.use("/information", require("./routes/information"));
 app.use("/contact", require("./routes/contact"));
+app.use("/image", require("./routes/image"));
 
 //export
 exports.api = functions.https.onRequest(app);

@@ -23,7 +23,7 @@ app.post("/signup", (req, res) => {
   db.collection("admin")
     .get()
     .then((snapshot) => {
-      if (snapshot._size === 0) {
+      // if (snapshot._size === 0) {
         return firebase
           .auth()
           .createUserWithEmailAndPassword(
@@ -50,9 +50,9 @@ app.post("/signup", (req, res) => {
           .catch((error) => {
             return res.status(500).json({ error: error.code });
           });
-      } else {
-        return res.status(409).json({ message: "Limit reached of admin." });
-      }
+      // } else {
+      //   return res.status(409).json({ message: "Limit reached of admin." });
+      // }
     });
 });
 

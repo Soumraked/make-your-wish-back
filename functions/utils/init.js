@@ -1,7 +1,7 @@
 const admin = require("firebase-admin");
 const functions = require("firebase-functions");
 const firebase = require("firebase");
-const firebaseConfig = {
+const config = {
   apiKey: "AIzaSyC6j7tPsFw47i1XOm9wAE2e9RlPIU-8Sy4",
   authDomain: "u-app-3100e.firebaseapp.com",
   projectId: "u-app-3100e",
@@ -23,9 +23,9 @@ const firebaseConfig = {
 admin.initializeApp(functions.config().firebase);
 //Online
 
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(config);
 let db = admin.firestore();
 
-module.exports = { admin, db, functions, firebase, firebaseConfig };
+module.exports = { admin, db, functions, firebase, config };
 
 
