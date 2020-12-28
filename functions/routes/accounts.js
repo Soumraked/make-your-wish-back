@@ -27,7 +27,7 @@ app.post("/signup", (req, res) => {
         return firebase
           .auth()
           .createUserWithEmailAndPassword(
-            `${credentials.rut}@make.cl`,
+            credentials.rut,
             credentials.password
           )
           .then((data) => {
@@ -72,7 +72,7 @@ app.post("/login", (req, res) => {
   firebase
     .auth()
     .signInWithEmailAndPassword(
-      `${credentials.rut}@make.cl`,
+      credentials.rut,
       credentials.password
     )
     .then((data) => {

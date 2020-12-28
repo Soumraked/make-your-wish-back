@@ -158,7 +158,7 @@ app.put("/update", Auth, (req, res) => {
 
 });
 
-app.delete("/delete", Auth, (req, res) => {
+app.post("/delete", Auth, (req, res) => {
   const id = req.body.id;
   db.doc(`/products/${id}`)
     .get()
